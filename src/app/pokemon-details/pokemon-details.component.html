@@ -1,0 +1,18 @@
+<div class="container p-4" *ngIf="pokemonDetail$ | async as pokemonDetail">
+  <h1 class="my-2">{{ pokemonDetail.name | titlecase }}</h1>
+  <h4>Abilities</h4>
+  <ul *ngIf="pokemonDetail.abilities">
+    <li *ngFor="let abilitiy of pokemonDetail.abilities">
+      {{ abilitiy.ability.name }}
+    </li>
+  </ul>
+
+  <h4>Forms</h4>
+  <ul *ngIf="pokemonDetail.forms">
+    <li *ngFor="let form of pokemonDetail.forms">
+      {{ form.name | titlecase }}
+    </li>
+  </ul>
+  <h4 class="my-2">Base Experience: {{ pokemonDetail.base_experience }}</h4>
+  <a routerLink="" href class="btn btn-primary">Go Back</a>
+</div>
