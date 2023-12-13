@@ -4,8 +4,20 @@ import { PokedexListComponent } from './pokedex-list/pokedex-list.component';
 import { PokemonDetailsComponent } from './pokemon-details/pokemon-details.component';
 
 const routes: Routes = [
-  { path: 'pokedex', component: PokedexListComponent },
-  { path: 'pokemon/:id', component: PokemonDetailsComponent },
+  {
+    path: 'pokedex',
+    loadChildren: () =>
+      import('./pokedex-list/pokedex-list.module').then(
+        (m) => m.PokedexListModule
+      ),
+  },
+  {
+    path: 'pokedex/:id',
+    loadChildren: () =>
+      import('./pokemon-details/pokemon-details.module').then(
+        (m) => m.PokemonDetailsModule
+      ),
+  },
   { path: '', redirectTo: '/pokedex', pathMatch: 'full' },
 ];
 

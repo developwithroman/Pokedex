@@ -1,9 +1,9 @@
 <div class="container">
   <h1>Showing Pokemons</h1>
   <ul class="list-group">
-    <li class="list-group-item" *ngFor="let pokemon of pokemonList$ | async">
+    <li class="list-group-item" *ngFor="let pokemon of pokemonList$">
       <!-- Assuming 'pokemon' is an object with a property 'url' containing the specific Pokemon URL -->
-      <a [routerLink]="'/pokemon/' + extractIdFromUrl(pokemon.url)">
+      <a [routerLink]="'/pokedex/' + extractIdFromUrl(pokemon.url)">
         {{ pokemon.name }}
       </a>
     </li>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, of } from 'rxjs';
 export interface PokemonDetail {
   name: string;
   base_experience: string;
@@ -50,7 +50,24 @@ export class PokemonService {
       .pipe(map((data) => data.results));
   }
 
-  fetchPokemonDetails(url: string): Observable<any> {
-    return this.http.get(url).pipe(map((data) => data));
+  fetchPokemonDetails(url: string): Observable<PokemonDetail> {
+    return this.http.get<PokemonDetail>(url).pipe(map((data) => data));
+  }
+
+  getPokemonList(): void {
+    this.fetchPokemonList().subscribe((data) =>
+      this.pokemonListSubject.next(data)
+    );
+  }
+  getPokemonDetails(url: string): void {
+    if (!this.pokemonDetailSubject.value[url]) {
+      this.fetchPokemonDetails(url).subscribe((data) => {
+        const updatedCache = {
+          ...this.pokemonDetailSubject.value,
+          [url]: data,
+        };
+        this.pokemonDetailSubject.next(updatedCache);
+      });
+    }
   }
 }
